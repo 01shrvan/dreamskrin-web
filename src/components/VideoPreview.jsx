@@ -34,7 +34,6 @@ export const VideoPreview = ({ children }) => {
   };
 
   useEffect(() => {
-    // Reset the position of the content when hover ends
     if (!isHovering) {
       gsap.to(sectionRef.current, {
         x: 0,

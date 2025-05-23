@@ -7,24 +7,21 @@ import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
 import Button from "./Button";
 
-// Register the ScrollTo plugin
 gsap.registerPlugin(ScrollToPlugin);
 
 const navItems = [
-  { name: "Nexus", id: "features" }, // Maps to Features section
-  { name: "Vault", id: "story" },    // Maps to Story section  
-  { name: "Prologue", id: "story" }, // Also maps to Story section
-  { name: "About", id: "about" },    // Maps to About section
-  { name: "Contact", id: "contact" } // Maps to Contact section
+  { name: "Nexus", id: "features" }, 
+  { name: "Vault", id: "story" },      
+  { name: "Prologue", id: "story" }, 
+  { name: "About", id: "about" },    
+  { name: "Contact", id: "contact" } 
 ];
 
 const NavBar = () => {
-  // State for toggling audio and visual indicator
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [isIndicatorActive, setIsIndicatorActive] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
-  // Refs for audio and navigation container
   const audioElementRef = useRef(null);
   const navContainerRef = useRef(null);
 
@@ -32,20 +29,17 @@ const NavBar = () => {
   const [isNavVisible, setIsNavVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
-  // Toggle audio and visual indicator
   const toggleAudioIndicator = () => {
     setIsAudioPlaying((prev) => !prev);
     setIsIndicatorActive((prev) => !prev);
   };
 
-  // Smooth scroll to section with GSAP
   const scrollToSection = (sectionId, event) => {
     event.preventDefault();
     
     const targetElement = document.getElementById(sectionId);
     if (!targetElement) return;
 
-    // Add active state animation to the clicked link
     const clickedLink = event.currentTarget;
     gsap.to(clickedLink, {
       scale: 0.95,
@@ -55,16 +49,14 @@ const NavBar = () => {
       ease: "power2.out"
     });
 
-    // Smooth scroll animation
     gsap.to(window, {
       duration: 1.5,
       scrollTo: {
         y: targetElement,
-        offsetY: 80, // Account for fixed navbar height
+        offsetY: 80, 
       },
       ease: "power3.inOut",
       onStart: () => {
-        // Add a subtle pulse effect to the target section
         gsap.fromTo(targetElement, 
           { 
             scale: 1,
@@ -82,7 +74,6 @@ const NavBar = () => {
       onComplete: () => {
         setActiveSection(sectionId);
         
-        // Add a subtle highlight effect
         gsap.fromTo(targetElement,
           {
             boxShadow: "0 0 0 rgba(139, 92, 246, 0)"
@@ -99,7 +90,6 @@ const NavBar = () => {
     });
   };
 
-  // Manage audio playback
   useEffect(() => {
     if (isAudioPlaying) {
       audioElementRef.current.play();
@@ -108,18 +98,14 @@ const NavBar = () => {
     }
   }, [isAudioPlaying]);
 
-  // Handle navbar visibility and floating state
   useEffect(() => {
     if (currentScrollY === 0) {
-      // Topmost position: show navbar without floating-nav
       setIsNavVisible(true);
       navContainerRef.current.classList.remove("floating-nav");
     } else if (currentScrollY > lastScrollY) {
-      // Scrolling down: hide navbar and apply floating-nav
       setIsNavVisible(false);
       navContainerRef.current.classList.add("floating-nav");
     } else if (currentScrollY < lastScrollY) {
-      // Scrolling up: show navbar with floating-nav
       setIsNavVisible(true);
       navContainerRef.current.classList.add("floating-nav");
     }
@@ -127,7 +113,6 @@ const NavBar = () => {
     setLastScrollY(currentScrollY);
   }, [currentScrollY, lastScrollY]);
 
-  // Animate navbar visibility
   useEffect(() => {
     gsap.to(navContainerRef.current, {
       y: isNavVisible ? 0 : -100,
@@ -136,7 +121,6 @@ const NavBar = () => {
     });
   }, [isNavVisible]);
 
-  // Intersection Observer to track active section
   useEffect(() => {
     const sections = navItems.map(item => document.getElementById(item.id)).filter(Boolean);
     
@@ -172,7 +156,6 @@ const NavBar = () => {
     >
       <header className="absolute top-1/2 w-full -translate-y-1/2">
         <nav className="flex size-full items-center justify-between p-4">
-          {/* Logo and Product button */}
           <div className="flex items-center gap-7">
             <img src="/img/logo.png" alt="logo" className="w-10" />
 
@@ -184,7 +167,6 @@ const NavBar = () => {
             />
           </div>
 
-          {/* Navigation Links and Audio Button */}
           <div className="flex h-full items-center">
             <div className="hidden md:block">
               {navItems.map((item, index) => (
