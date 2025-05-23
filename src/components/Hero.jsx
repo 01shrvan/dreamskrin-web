@@ -140,7 +140,7 @@ const Hero = () => {
         </div>
 
         <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 text-blue-75">
-          G<b>A</b>MING
+          M<b>A</b>RKETING
         </h1>
 
         <div className="absolute left-0 top-0 z-40 size-full">
@@ -150,12 +150,11 @@ const Hero = () => {
             </h1>
 
             <p className="mb-5 max-w-64 font-robert-regular text-blue-100">
-              Enter the Metagame Layer <br /> Unleash the Play Economy
+              Enter the Digital Revolution <br /> Unleash the Growth Economy
             </p>
-
             <Button
-              id="watch-trailer"
-              title="Watch trailer"
+              id="how"
+              title="how?"
               leftIcon={<TiLocationArrow />}
               containerClass="bg-yellow-300 flex-center gap-1"
             />
