@@ -3,15 +3,26 @@ import gsap from "gsap";
 import { useWindowScroll } from "react-use";
 import { useEffect, useRef, useState } from "react";
 import { TiLocationArrow } from "react-icons/ti";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
 import Button from "./Button";
 
-const navItems = ["Nexus", "Vault", "Prologue", "About", "Contact"];
+// Register the ScrollTo plugin
+gsap.registerPlugin(ScrollToPlugin);
+
+const navItems = [
+  { name: "Nexus", id: "features" }, // Maps to Features section
+  { name: "Vault", id: "story" },    // Maps to Story section  
+  { name: "Prologue", id: "story" }, // Also maps to Story section
+  { name: "About", id: "about" },    // Maps to About section
+  { name: "Contact", id: "contact" } // Maps to Contact section
+];
 
 const NavBar = () => {
   // State for toggling audio and visual indicator
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [isIndicatorActive, setIsIndicatorActive] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   // Refs for audio and navigation container
   const audioElementRef = useRef(null);
@@ -27,6 +38,67 @@ const NavBar = () => {
     setIsIndicatorActive((prev) => !prev);
   };
 
+  // Smooth scroll to section with GSAP
+  const scrollToSection = (sectionId, event) => {
+    event.preventDefault();
+    
+    const targetElement = document.getElementById(sectionId);
+    if (!targetElement) return;
+
+    // Add active state animation to the clicked link
+    const clickedLink = event.currentTarget;
+    gsap.to(clickedLink, {
+      scale: 0.95,
+      duration: 0.1,
+      yoyo: true,
+      repeat: 1,
+      ease: "power2.out"
+    });
+
+    // Smooth scroll animation
+    gsap.to(window, {
+      duration: 1.5,
+      scrollTo: {
+        y: targetElement,
+        offsetY: 80, // Account for fixed navbar height
+      },
+      ease: "power3.inOut",
+      onStart: () => {
+        // Add a subtle pulse effect to the target section
+        gsap.fromTo(targetElement, 
+          { 
+            scale: 1,
+            transformOrigin: "center center"
+          },
+          {
+            scale: 1.02,
+            duration: 0.3,
+            yoyo: true,
+            repeat: 1,
+            ease: "power2.out"
+          }
+        );
+      },
+      onComplete: () => {
+        setActiveSection(sectionId);
+        
+        // Add a subtle highlight effect
+        gsap.fromTo(targetElement,
+          {
+            boxShadow: "0 0 0 rgba(139, 92, 246, 0)"
+          },
+          {
+            boxShadow: "0 0 30px rgba(139, 92, 246, 0.3)",
+            duration: 0.5,
+            yoyo: true,
+            repeat: 1,
+            ease: "power2.inOut"
+          }
+        );
+      }
+    });
+  };
+
   // Manage audio playback
   useEffect(() => {
     if (isAudioPlaying) {
@@ -36,6 +108,7 @@ const NavBar = () => {
     }
   }, [isAudioPlaying]);
 
+  // Handle navbar visibility and floating state
   useEffect(() => {
     if (currentScrollY === 0) {
       // Topmost position: show navbar without floating-nav
@@ -54,6 +127,7 @@ const NavBar = () => {
     setLastScrollY(currentScrollY);
   }, [currentScrollY, lastScrollY]);
 
+  // Animate navbar visibility
   useEffect(() => {
     gsap.to(navContainerRef.current, {
       y: isNavVisible ? 0 : -100,
@@ -61,6 +135,35 @@ const NavBar = () => {
       duration: 0.2,
     });
   }, [isNavVisible]);
+
+  // Intersection Observer to track active section
+  useEffect(() => {
+    const sections = navItems.map(item => document.getElementById(item.id)).filter(Boolean);
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        threshold: 0.5,
+        rootMargin: "-80px 0px -50% 0px"
+      }
+    );
+
+    sections.forEach((section) => {
+      if (section) observer.observe(section);
+    });
+
+    return () => {
+      sections.forEach((section) => {
+        if (section) observer.unobserve(section);
+      });
+    };
+  }, []);
 
   return (
     <div
@@ -87,10 +190,17 @@ const NavBar = () => {
               {navItems.map((item, index) => (
                 <a
                   key={index}
-                  href={`#${item.toLowerCase()}`}
-                  className="nav-hover-btn"
+                  href={`#${item.id}`}
+                  onClick={(e) => scrollToSection(item.id, e)}
+                  className={clsx(
+                    "nav-hover-btn transition-all duration-300 hover:text-violet-300",
+                    {
+                      "text-violet-400 after:scale-x-100": activeSection === item.id,
+                      "text-blue-50": activeSection !== item.id
+                    }
+                  )}
                 >
-                  {item}
+                  {item.name}
                 </a>
               ))}
             </div>
