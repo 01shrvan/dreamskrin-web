@@ -54,4 +54,4 @@ const AnimatedTitle = ({ title, containerClass }) => {
   );
 };
 
-export default AnimatedTitle;w
+export default AnimatedTitle;

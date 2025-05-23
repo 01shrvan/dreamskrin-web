@@ -29,13 +29,6 @@ export default {
     },
   },
   plugins: [],
-  safelist: [
-    'font-zentry',
-    'font-general',
-    'font-circular-web',
-    'font-robert-medium',
-    'font-robert-regular',
-  ],
   future: {
     ignoreDeprecationWarnings: true,
   }
