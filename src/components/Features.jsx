@@ -1,7 +1,8 @@
 import { useState, useRef } from "react";
-import { TiLocationArrow } from "react-icons/ti";
+import { ArrowUpRight } from "lucide-react";
 
-export const BentoTilt = ({ children, className = "" }) => {
+// Tilt effect wrapper
+const BentoTilt = ({ children, className = "" }) => {
   const [transformStyle, setTransformStyle] = useState("");
   const itemRef = useRef(null);
 
@@ -10,14 +11,12 @@ export const BentoTilt = ({ children, className = "" }) => {
 
     const { left, top, width, height } =
       itemRef.current.getBoundingClientRect();
-
     const relativeX = (event.clientX - left) / width;
     const relativeY = (event.clientY - top) / height;
+    const tiltX = (relativeY - 0.5) * 8;
+    const tiltY = (relativeX - 0.5) * -8;
 
-    const tiltX = (relativeY - 0.5) * 5;
-    const tiltY = (relativeX - 0.5) * -5;
-
-    const newTransform = `perspective(700px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(.95, .95, .95)`;
+    const newTransform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(0.98, 0.98, 0.98)`;
     setTransformStyle(newTransform);
   };
 
@@ -28,7 +27,7 @@ export const BentoTilt = ({ children, className = "" }) => {
   return (
     <div
       ref={itemRef}
-      className={className}
+      className={`transition-transform duration-300 ease-out ${className}`}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ transform: transformStyle }}
@@ -38,154 +37,69 @@ export const BentoTilt = ({ children, className = "" }) => {
   );
 };
 
-export const BentoCard = ({ src, title, description, isComingSoon }) => {
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-  const [hoverOpacity, setHoverOpacity] = useState(0);
-  const hoverButtonRef = useRef(null);
-
-  const handleMouseMove = (event) => {
-    if (!hoverButtonRef.current) return;
-    const rect = hoverButtonRef.current.getBoundingClientRect();
-
-    setCursorPosition({
-      x: event.clientX - rect.left,
-      y: event.clientY - rect.top,
-    });
-  };
-
-  const handleMouseEnter = () => setHoverOpacity(1);
-  const handleMouseLeave = () => setHoverOpacity(0);
-
-  return (
-    <div className="relative size-full">
-      <video
+// Minimal image-only card
+const ImageCard = ({ src, isBig = false, className = "" }) => (
+  <div
+    className={`relative h-full w-full overflow-hidden rounded-xl ${
+      isBig ? "border border-gray-700/40 shadow-sm" : ""
+    } ${className}`}
+  >
+    {src && (
+      <img
         src={src}
-        loop
-        muted
-        autoPlay
-        className="absolute left-0 top-0 size-full object-cover object-center"
+        alt=""
+        className={`absolute inset-0 h-full w-full ${
+          isBig ? "object-cover" : "object-contain"
+        }`}
+        draggable={false}
       />
-      <div className="relative z-10 flex size-full flex-col justify-between p-5 text-blue-50">
-        <div>
-          <h1 className="bento-title special-font">{title}</h1>
-          {description && (
-            <p className="mt-3 max-w-64 text-xs md:text-base">{description}</p>
-          )}
+    )}
+  </div>
+);
+
+const Features = () => {
+  return (
+    <section className="min-h-screen bg-black py-20">
+      <div className="container mx-auto px-4 md:px-8">
+        {/* Section Header */}
+        <div className="mb-16 max-w-2xl">
+          <p className="text-lg text-blue-50 md:text-xl">
+            Into the Digital Revolution
+          </p>
+          <p className="mt-4 text-base text-blue-50/60 md:text-lg">
+            Immerse yourself in a rich and ever-expanding universe where a
+            vibrant array of services converge into an interconnected growth
+            experience for your brand
+          </p>
         </div>
 
-        {isComingSoon && (
-          <div
-            ref={hoverButtonRef}
-            onMouseMove={handleMouseMove}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            className="border-hsla relative flex w-fit cursor-pointer items-center gap-1 overflow-hidden rounded-full bg-black px-5 py-2 text-xs uppercase text-white/20"
-          >
-            <div
-              className="pointer-events-none absolute -inset-px opacity-0 transition duration-300"
-              style={{
-                opacity: hoverOpacity,
-                background: `radial-gradient(100px circle at ${cursorPosition.x}px ${cursorPosition.y}px, #656fe288, #00000026)`,
-              }}
-            />
-            <TiLocationArrow className="relative z-20" />
-            <p className="relative z-20">coming soon</p>
-          </div>
-        )}
+        <BentoTilt className="mb-8">
+          <ImageCard src="img/1.jpg" isBig className="h-[400px] md:h-[500px]" />
+        </BentoTilt>
+
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <BentoTilt>
+            <ImageCard src="img/1.jpg" className="h-[300px]" />
+          </BentoTilt>
+
+          <BentoTilt>
+            <ImageCard src="img/1.jpg" className="h-[300px]" />
+          </BentoTilt>
+
+          <BentoTilt>
+            <div className="flex h-[300px] flex-col justify-between rounded-xl bg-gradient-to-br from-violet-400 to-violet-600 p-6">
+              <h1 className="max-w-48 text-2xl font-bold text-black md:text-3xl">
+                M<span className="font-black">o</span>re co
+                <span className="font-black">m</span>ing s
+                <span className="font-black">o</span>on.
+              </h1>
+              <ArrowUpRight className="ml-auto h-8 w-8 text-black" />
+            </div>
+          </BentoTilt>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
-
-const Features = () => (
-  <section className="bg-black pb-52">
-    <div className="container mx-auto px-3 md:px-10">
-      <div className="px-5 py-32">
-        <p className="font-circular-web text-lg text-blue-50">
-          Into the Digital Revolution
-        </p>
-        <p className="max-w-md font-circular-web text-lg text-blue-50 opacity-50">
-          Immerse yourself in a rich and ever-expanding universe where a vibrant
-          array of services converge into an interconnected growth experience
-          for your brand
-        </p>
-      </div>
-
-      <BentoTilt className="border-hsla relative mb-7 h-96 w-full overflow-hidden rounded-md md:h-[65vh]">
-        <BentoCard
-          src="videos/feature-1.mp4"
-          title={
-            <>
-              cataly<b>s</b>t
-            </>
-          }
-          description="A cross-platform analytics dashboard, turning your marketing activities across digital and traditional channels into measurable success"
-          isComingSoon
-        />
-      </BentoTilt>
-
-      <div className="grid h-[135vh] w-full grid-cols-2 grid-rows-3 gap-7">
-        <BentoTilt className="bento-tilt_1 row-span-1 md:col-span-1 md:row-span-2">
-          <BentoCard
-            src="videos/feature-2.mp4"
-            title={
-              <>
-                ampli<b>f</b>y
-              </>
-            }
-            description="A data and performance-inspired campaign collection - the strategy primed for expansion."
-            isComingSoon
-          />
-        </BentoTilt>
-
-        <BentoTilt className="bento-tilt_1 row-span-1 ms-32 md:col-span-1 md:ms-0">
-          <BentoCard
-            src="videos/feature-3.mp4"
-            title={
-              <>
-                c<b>o</b>nnect
-              </>
-            }
-            description="A personalized customer hub, adding a new dimension of engagement to brand interaction for modern businesses."
-            isComingSoon
-          />
-        </BentoTilt>
-
-        <BentoTilt className="bento-tilt_1 me-14 md:col-span-1 md:me-0">
-          <BentoCard
-            src="videos/feature-4.mp4"
-            title={
-              <>
-                optimi<b>z</b>e
-              </>
-            }
-            description="A cross-channel AI Assistant - elevating your marketing to be more targeted and profitable."
-            isComingSoon
-          />
-        </BentoTilt>
-
-        <BentoTilt className="bento-tilt_2">
-          <div className="flex size-full flex-col justify-between bg-violet-300 p-5">
-            <h1 className="bento-title special-font max-w-64 text-black">
-              M<b>o</b>re co<b>m</b>ing s<b>o</b>on.
-            </h1>
-
-            <TiLocationArrow className="m-5 scale-[5] self-end" />
-          </div>
-        </BentoTilt>
-
-        <BentoTilt className="bento-tilt_2">
-          <video
-            src="videos/feature-5.mp4"
-            loop
-            muted
-            autoPlay
-            className="size-full object-cover object-center"
-          />
-        </BentoTilt>
-      </div>
-    </div>
-  </section>
-);
 
 export default Features;
