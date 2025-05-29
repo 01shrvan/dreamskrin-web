@@ -67,13 +67,12 @@ const Hero = () => {
         id="hero-frame"
         className="relative z-10 h-dvh w-screen overflow-visible rounded-lg bg-black"
       >
-        {/* DreamSkrin - Large Background Text - FIXED */}
         <div
           ref={dreamSkrinRef}
-          className="absolute inset-0 z-5 flex items-center justify-center pointer-events-none overflow-visible"
+          className="absolute inset-0 z-[20] flex items-center justify-center pointer-events-none overflow-visible"
         >
-          <h1 className="special-font text-[8rem] md:text-[10rem] lg:text-[12rem] xl:text-[14rem] font-black text-white opacity-5 leading-none whitespace-nowrap">
-            DREAMSKRIN
+          <h1 className="special-font text-[8rem] md:text-[10rem] lg:text-[12rem] xl:text-[14rem] font-black text-white opacity-30 leading-none whitespace-nowrap">
+            <b>DS</b>
           </h1>
         </div>
 
@@ -90,19 +89,21 @@ const Hero = () => {
             <p className="mb-5 max-w-64 font-robert-regular text-white">
               Enter the Digital Revolution <br /> Unleash the Growth Economy
             </p>
-            <Button
-              id="how"
-              title="how?"
-              leftIcon={<TiLocationArrow />}
-              containerClass="bg-yellow-300 flex-center gap-1"
-            />
+            <a href="mailto:hello@example.com">
+              <Button
+                id="cta"
+                title="time to go viral"
+                leftIcon={<TiLocationArrow />}
+                containerClass="bg-yellow-300 flex-center gap-1"
+              />
+            </a>
           </div>
         </div>
       </div>
 
-      <h1 className="special-font hero-heading absolute bottom-5 right-5 text-black">
-        G<b>A</b>MING
-      </h1>
+      {/* <h1 className="special-font hero-heading absolute bottom-5 right-5 text-black">
+        M<b>A</b>RKETING
+      </h1> */}
     </div>
   );
 };
