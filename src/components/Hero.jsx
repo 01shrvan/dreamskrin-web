@@ -71,7 +71,7 @@ const Hero = () => {
           ref={dreamSkrinRef}
           className="absolute inset-0 z-[20] flex items-center justify-center pointer-events-none overflow-visible"
         >
-          <h1 className="special-font text-[8rem] md:text-[10rem] lg:text-[12rem] xl:text-[14rem] font-black text-white opacity-30 leading-none whitespace-nowrap">
+          <h1 className="special-font text-6xl sm:text-7xl md:text-9xl lg:text-[12rem] xl:text-[14rem] font-black text-white opacity-40 md:opacity-30 leading-none whitespace-nowrap">
             <b>DS</b>
           </h1>
         </div>
@@ -101,9 +101,9 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* <h1 className="special-font hero-heading absolute bottom-5 right-5 text-black">
+      <h1 className="special-font hero-heading absolute bottom-5 right-5 text-black">
         M<b>A</b>RKETING
-      </h1> */}
+      </h1>
     </div>
   );
 };
