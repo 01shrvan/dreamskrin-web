@@ -10,8 +10,8 @@ import Button from "./Button";
 gsap.registerPlugin(ScrollToPlugin);
 
 const navItems = [
-  { name: "Nexus", id: "features" }, 
-  { name: "Vault", id: "story" },      
+  // { name: "Nexus", id: "features" }, 
+  // { name: "Vault", id: "story" },      
   { name: "Prologue", id: "story" }, 
   { name: "About", id: "about" },    
   { name: "Contact", id: "contact" } 
@@ -160,8 +160,8 @@ const NavBar = () => {
             <img src="/img/logo.png" alt="logo" className="w-10" />
 
             <Button
-              id="product-button"
-              title="Products"
+              id="ignite"
+              title="IGNITE "
               rightIcon={<TiLocationArrow />}
               containerClass="bg-blue-50 md:flex hidden items-center justify-center gap-1"
             />

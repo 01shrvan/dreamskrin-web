@@ -5,58 +5,78 @@ const BentoTilt = ({ children, className = "" }) => {
   const [transformStyle, setTransformStyle] = useState("");
   const itemRef = useRef(null);
 
-  // Detect if device is mobile by checking touch support or screen width
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const mobileCheck = "ontouchstart" in window || window.innerWidth < 768;
     setIsMobile(mobileCheck);
     if (mobileCheck) {
-      // Set default transform so it's visible on mobile
-      setTransformStyle("perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)");
+      setTransformStyle("perspective(1000px) rotateX(2deg) rotateY(-2deg) scale3d(1,1,1)");
     }
   }, []);
 
-  const handleMouseMove = (event) => {
+  const calculateTilt = (clientX, clientY) => {
     if (!itemRef.current) return;
-
     const { left, top, width, height } = itemRef.current.getBoundingClientRect();
-    const relativeX = (event.clientX - left) / width;
-    const relativeY = (event.clientY - top) / height;
+    const relativeX = (clientX - left) / width;
+    const relativeY = (clientY - top) / height;
     const tiltX = (relativeY - 0.5) * 8;
     const tiltY = (relativeX - 0.5) * -8;
+    return `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(0.98, 0.98, 0.98)`;
+  };
 
-    const newTransform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(0.98, 0.98, 0.98)`;
-    setTransformStyle(newTransform);
+  const frameId = useRef(null);
+  const pendingTransform = useRef(null);
+
+  const updateTransform = () => {
+    if (pendingTransform.current) {
+      setTransformStyle(pendingTransform.current);
+      pendingTransform.current = null;
+    }
+    frameId.current = null;
+  };
+
+  const requestUpdate = (newTransform) => {
+    pendingTransform.current = newTransform;
+    if (!frameId.current) {
+      frameId.current = requestAnimationFrame(updateTransform);
+    }
+  };
+
+  const handleMouseMove = (event) => {
+    if (isMobile) return;
+    const newTransform = calculateTilt(event.clientX, event.clientY);
+    if (newTransform) requestUpdate(newTransform);
   };
 
   const handleTouchMove = (event) => {
-    if (!itemRef.current || event.touches.length === 0) return;
-
+    if (!isMobile) return;
+    if (event.touches.length === 0) return;
     const touch = event.touches[0];
-    const { left, top, width, height } = itemRef.current.getBoundingClientRect();
-    const relativeX = (touch.clientX - left) / width;
-    const relativeY = (touch.clientY - top) / height;
-    const tiltX = (relativeY - 0.5) * 8;
-    const tiltY = (relativeX - 0.5) * -8;
-
-    const newTransform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(0.98, 0.98, 0.98)`;
-    setTransformStyle(newTransform);
+    const newTransform = calculateTilt(touch.clientX, touch.clientY);
+    if (newTransform) requestUpdate(newTransform);
   };
 
   const resetTransform = () => {
-    setTransformStyle("perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)");
+    if (isMobile) {
+      setTransformStyle("perspective(1000px) rotateX(2deg) rotateY(-2deg) scale3d(1, 1, 1)");
+    } else {
+      setTransformStyle("");
+    }
   };
 
   return (
     <div
       ref={itemRef}
-      className={`transition-transform duration-300 ease-out ${className}`}
-      onMouseMove={isMobile ? undefined : handleMouseMove}
-      onMouseLeave={isMobile ? undefined : resetTransform}
-      onTouchMove={isMobile ? handleTouchMove : undefined}
-      onTouchEnd={isMobile ? resetTransform : undefined}
-      style={{ transform: transformStyle }}
+      className={`transition-transform duration-300 ease-out touch-none ${className}`}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={resetTransform}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={resetTransform}
+      style={{
+        transform: transformStyle,
+        touchAction: "none" 
+      }}
     >
       {children}
     </div>

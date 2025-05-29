@@ -11,9 +11,9 @@ const About = () => {
     const clipAnimation = gsap.timeline({
       scrollTrigger: {
         trigger: "#clip",
-        start: "center center",
-        end: "+=800 center",
-        scrub: 0.5,
+        start: "top center",
+        end: "+=400 center", // Reduced scroll distance
+        scrub: 1,            // Smoother transition
         pin: true,
         pinSpacing: true,
       },
@@ -23,6 +23,7 @@ const About = () => {
       width: "100vw",
       height: "100vh",
       borderRadius: 0,
+      ease: "power2.out", // Optional easing
     });
   });
 
