@@ -1,7 +1,6 @@
 import { useState, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 
-// Tilt effect wrapper
 const BentoTilt = ({ children, className = "" }) => {
   const [transformStyle, setTransformStyle] = useState("");
   const itemRef = useRef(null);
@@ -37,7 +36,6 @@ const BentoTilt = ({ children, className = "" }) => {
   );
 };
 
-// Minimal image-only card
 const ImageCard = ({ src, isBig = false, className = "" }) => (
   <div
     className={`relative h-full w-full overflow-hidden rounded-xl ${
@@ -61,7 +59,6 @@ const Features = () => {
   return (
     <section className="min-h-screen bg-black py-20">
       <div className="container mx-auto px-4 md:px-8">
-        {/* Section Header */}
         <div className="mb-16 max-w-2xl">
           <p className="text-lg text-blue-50 md:text-xl">
             Into the Digital Revolution
