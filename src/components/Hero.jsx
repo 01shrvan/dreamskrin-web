@@ -32,8 +32,8 @@ const Hero = () => {
       },
     });
 
-    // DreamSkrin scaling effect - fixed animation
-    gsap.fromTo(dreamSkrinRef.current, 
+    gsap.fromTo(
+      dreamSkrinRef.current,
       {
         scale: 1,
         opacity: 0.15,
@@ -103,18 +103,6 @@ const Hero = () => {
       <h1 className="special-font hero-heading absolute bottom-5 right-5 text-black">
         G<b>A</b>MING
       </h1>
-
-      {/* Additional content for scrolling demonstration */}
-      <div className="h-dvh bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="special-font text-6xl font-black text-black mb-4">
-            NEXT SECTION
-          </h2>
-          <p className="font-robert-regular text-gray-600">
-            Continue your journey
-          </p>
-        </div>
-      </div>
     </div>
   );
 };
