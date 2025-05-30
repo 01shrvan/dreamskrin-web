@@ -10,7 +10,6 @@ const FloatingImage = () => {
   const handleMouseMove = (e) => {
     const { clientX, clientY } = e;
     const element = frameRef.current;
-
     if (!element) return;
 
     const rect = element.getBoundingClientRect();
@@ -34,7 +33,6 @@ const FloatingImage = () => {
 
   const handleMouseLeave = () => {
     const element = frameRef.current;
-
     if (element) {
       gsap.to(element, {
         duration: 0.3,
@@ -46,87 +44,49 @@ const FloatingImage = () => {
   };
 
   const handleDiscoverClick = () => {
-    // Scroll to contact section
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    const contactSection = document.getElementById("contact");
+    if (contactSection) contactSection.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <div id="story" className="min-h-dvh w-screen bg-black text-blue-50">
-      <div className="flex size-full flex-col items-center py-10 pb-24">
-        <p className="font-general text-sm uppercase md:text-[10px]">
-          Comprehensive Digital Excellence
-        </p>
+    <div id="story" className="min-h-screen w-full bg-black text-blue-50 flex flex-col items-center py-10 px-4 md:px-20">
+      <p className="font-general text-sm uppercase md:text-xs mb-2">
+        Comprehensive Digital Excellence
+      </p>
 
-        <div className="relative size-full">
-          <AnimatedTitle
-            title="the p<b>o</b>wer of <br /> strategic innov<b>a</b>tion"
-            containerClass="mt-5 pointer-events-none mix-blend-difference relative z-10"
-          />
+      <AnimatedTitle
+        title="the p<b>o</b>wer of <br /> strategic innov<b>a</b>tion"
+        containerClass="pointer-events-none mix-blend-difference relative z-10 text-center md:text-left mb-8"
+      />
 
-          <div className="story-img-container">
-            <div className="story-img-mask">
-              <div className="story-img-content">
-                <img
-                  ref={frameRef}
-                  onMouseMove={handleMouseMove}
-                  onMouseLeave={handleMouseLeave}
-                  onMouseUp={handleMouseLeave}
-                  onMouseEnter={handleMouseLeave}
-                  src="/img/entrance.png"
-                  alt="entrance.png"
-                  className="object-contain"
-                />
-              </div>
-            </div>
-
-            <svg
-              className="invisible absolute size-0"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <defs>
-                <filter id="flt_tag">
-                  <feGaussianBlur
-                    in="SourceGraphic"
-                    stdDeviation="8"
-                    result="blur"
-                  />
-                  <feColorMatrix
-                    in="blur"
-                    mode="matrix"
-                    values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
-                    result="flt_tag"
-                  />
-                  <feComposite
-                    in="SourceGraphic"
-                    in2="flt_tag"
-                    operator="atop"
-                  />
-                </filter>
-              </defs>
-            </svg>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full max-w-7xl gap-10">
+        {/* Text Section */}
+        <div className="flex flex-col max-w-md text-center md:text-left">
+          <p className="font-circular-web text-violet-50 mb-6">
+            Where innovation meets execution, DreamSkrin transforms businesses through strategic digital solutions. Experience unprecedented growth through our comprehensive approach to brand development, digital marketing, and customer engagement. Your success story begins here.
+          </p>
+          <div className="self-center md:self-start">
+            <Button
+              id="realm-btn"
+              title="explore solutions"
+              containerClass="cursor-pointer"
+              onClick={handleDiscoverClick}
+            />
           </div>
         </div>
 
-        <div className="-mt-80 flex w-full justify-center md:-mt-64 md:me-44 md:justify-end">
-          <div className="flex h-full w-fit flex-col items-center md:items-start">
-            <p className="mt-3 max-w-sm text-center font-circular-web text-violet-50 md:text-start">
-              Where innovation meets execution, DreamSkrin transforms businesses through 
-              strategic digital solutions. Experience unprecedented growth through our 
-              comprehensive approach to brand development, digital marketing, and 
-              customer engagement. Your success story begins here.
-            </p>
-
-            <div onClick={handleDiscoverClick}>
-              <Button
-                id="realm-btn"
-                title="explore solutions"
-                containerClass="mt-5 cursor-pointer"
-              />
-            </div>
-          </div>
+        {/* Image Section */}
+        <div className="flex justify-center md:justify-end max-w-md w-full">
+          <img
+            ref={frameRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            onMouseUp={handleMouseLeave}
+            onMouseEnter={handleMouseLeave}
+            src="/img/entrance.png"
+            alt="entrance.png"
+            className="object-contain max-w-full max-h-80 md:max-h-[28rem] rounded-lg shadow-lg"
+          />
         </div>
       </div>
     </div>
