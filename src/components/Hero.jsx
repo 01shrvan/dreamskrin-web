@@ -52,7 +52,8 @@ const Hero = () => {
   });
 
   const handleContactClick = () => {
-    window.location.href = "mailto:hello@dreamskrin.com?subject=Let's Get Started&body=Hi there! I'm interested in transforming my brand with DreamSkrin. Let's discuss how we can work together.";
+    window.location.href =
+      "mailto:hello@dreamskrin.com?subject=Let's Get Started&body=Hi there! I'm interested in transforming my brand with DreamSkrin. Let's discuss how we can work together.";
   };
 
   return (
@@ -93,14 +94,15 @@ const Hero = () => {
             <p className="mb-5 max-w-64 font-robert-regular text-white">
               Transform Your Digital Presence <br /> Accelerate Business Growth
             </p>
-            <div onClick={handleContactClick}>
-              <Button
-                id="cta"
-                title="transform now"
-                leftIcon={<TiLocationArrow />}
-                containerClass="bg-yellow-300 flex-center gap-1 cursor-pointer"
-              />
-            </div>
+            <Button
+              id="cta"
+              title="transform now"
+              leftIcon={<TiLocationArrow />}
+              containerClass="bg-yellow-300 flex-center gap-1 cursor-pointer"
+              mailto="mail@dreamskrin.com"
+              subject="Let's Get Started"
+              body="Hi there! I'm interested in transforming my brand with DreamSkrin. Let's discuss how we can work together."
+            />
           </div>
         </div>
       </div>

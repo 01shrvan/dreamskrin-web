@@ -9,7 +9,8 @@ const ImageClipBox = ({ src, clipClass }) => (
 
 const Contact = () => {
   const handleContactClick = () => {
-    window.location.href = "mailto:hello@dreamskrin.com?subject=Business Inquiry&body=Hello, I'm interested in learning more about DreamSkrin's services.";
+    window.location.href =
+      mailto="mail@dreamskrin.com";
   };
 
   return (
@@ -26,7 +27,13 @@ const Contact = () => {
           />
 
           <div onClick={handleContactClick}>
-            <Button title="start your journey" containerClass="mt-10 cursor-pointer" />
+            <Button
+              title="start your journey"
+              containerClass="mt-10 cursor-pointer"
+              mailto="mail@dreamskrin.com"
+              subject="Business Inquiry"
+              body="Hello, I'm interested in learning more about DreamSkrin's services."
+            />
           </div>
         </div>
       </div>
