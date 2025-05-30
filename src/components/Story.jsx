@@ -45,16 +45,24 @@ const FloatingImage = () => {
     }
   };
 
+  const handleDiscoverClick = () => {
+    // Scroll to contact section
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div id="story" className="min-h-dvh w-screen bg-black text-blue-50">
       <div className="flex size-full flex-col items-center py-10 pb-24">
         <p className="font-general text-sm uppercase md:text-[10px]">
-          the multiversal brand world
+          Comprehensive Digital Excellence
         </p>
 
         <div className="relative size-full">
           <AnimatedTitle
-            title="the st<b>o</b>ry of <br /> a hidden oppurtunit<b>y</b>"
+            title="the p<b>o</b>wer of <br /> strategic innov<b>a</b>tion"
             containerClass="mt-5 pointer-events-none mix-blend-difference relative z-10"
           />
 
@@ -105,16 +113,19 @@ const FloatingImage = () => {
         <div className="-mt-80 flex w-full justify-center md:-mt-64 md:me-44 md:justify-end">
           <div className="flex h-full w-fit flex-col items-center md:items-start">
             <p className="mt-3 max-w-sm text-center font-circular-web text-violet-50 md:text-start">
-              Where strategies converge, lies DreamSkrin and the boundless
-              potential. Discover its power and shape your success amidst
-              infinite possibilities. 
+              Where innovation meets execution, DreamSkrin transforms businesses through 
+              strategic digital solutions. Experience unprecedented growth through our 
+              comprehensive approach to brand development, digital marketing, and 
+              customer engagement. Your success story begins here.
             </p>
 
-            <Button
-              id="realm-btn"
-              title="discover strategy"
-              containerClass="mt-5"
-            />
+            <div onClick={handleDiscoverClick}>
+              <Button
+                id="realm-btn"
+                title="explore solutions"
+                containerClass="mt-5 cursor-pointer"
+              />
+            </div>
           </div>
         </div>
       </div>

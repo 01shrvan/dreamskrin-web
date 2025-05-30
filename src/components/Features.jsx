@@ -107,10 +107,11 @@ const Features = () => {
     <section className="min-h-screen bg-black py-20">
       <div className="container mx-auto px-4 md:px-8">
         <div className="mb-16 max-w-2xl">
-          <p className="text-lg text-blue-50 md:text-xl">Into the Digital Revolution</p>
+          <p className="text-lg text-blue-50 md:text-xl">Comprehensive Digital Solutions</p>
           <p className="mt-4 text-base text-blue-50/60 md:text-lg">
-            Immerse yourself in a rich and ever-expanding universe where a vibrant array of
-            services converge into an interconnected growth experience for your brand
+            Experience a comprehensive suite of cutting-edge services designed to elevate your brand, 
+            drive engagement, and accelerate growth in the digital landscape. From strategy to execution, 
+            we deliver measurable results that transform your business presence.
           </p>
         </div>
 
@@ -130,9 +131,9 @@ const Features = () => {
           <BentoTilt>
             <div className="flex h-[300px] flex-col justify-between rounded-xl bg-gradient-to-br from-violet-400 to-violet-600 p-6">
               <h1 className="max-w-48 text-2xl font-bold text-black md:text-3xl">
-                M<span className="font-black">o</span>re co
-                <span className="font-black">m</span>ing s
-                <span className="font-black">o</span>on.
+                Innov<span className="font-black">a</span>tive s
+                <span className="font-black">o</span>luti<span className="font-black">o</span>ns 
+                <span className="font-black"> c</span>oming s<span className="font-black">o</span>on.
               </h1>
               <ArrowUpRight className="ml-auto h-8 w-8 text-black" />
             </div>

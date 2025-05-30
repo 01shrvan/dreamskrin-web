@@ -10,11 +10,9 @@ import Button from "./Button";
 gsap.registerPlugin(ScrollToPlugin);
 
 const navItems = [
-  // { name: "Nexus", id: "features" }, 
-  // { name: "Vault", id: "story" },      
-  { name: "Prologue", id: "story" }, 
-  { name: "About", id: "about" },    
-  { name: "Contact", id: "contact" } 
+  { name: "Prologue", id: "story" },
+  { name: "About", id: "about" },
+  { name: "Contact", id: "contact" },
 ];
 
 const NavBar = () => {
@@ -36,7 +34,7 @@ const NavBar = () => {
 
   const scrollToSection = (sectionId, event) => {
     event.preventDefault();
-    
+
     const targetElement = document.getElementById(sectionId);
     if (!targetElement) return;
 
@@ -46,47 +44,49 @@ const NavBar = () => {
       duration: 0.1,
       yoyo: true,
       repeat: 1,
-      ease: "power2.out"
+      ease: "power2.out",
     });
 
     gsap.to(window, {
       duration: 1.5,
       scrollTo: {
         y: targetElement,
-        offsetY: 80, 
+        offsetY: 80,
       },
       ease: "power3.inOut",
       onStart: () => {
-        gsap.fromTo(targetElement, 
-          { 
+        gsap.fromTo(
+          targetElement,
+          {
             scale: 1,
-            transformOrigin: "center center"
+            transformOrigin: "center center",
           },
           {
             scale: 1.02,
             duration: 0.3,
             yoyo: true,
             repeat: 1,
-            ease: "power2.out"
+            ease: "power2.out",
           }
         );
       },
       onComplete: () => {
         setActiveSection(sectionId);
-        
-        gsap.fromTo(targetElement,
+
+        gsap.fromTo(
+          targetElement,
           {
-            boxShadow: "0 0 0 rgba(139, 92, 246, 0)"
+            boxShadow: "0 0 0 rgba(139, 92, 246, 0)",
           },
           {
             boxShadow: "0 0 30px rgba(139, 92, 246, 0.3)",
             duration: 0.5,
             yoyo: true,
             repeat: 1,
-            ease: "power2.inOut"
+            ease: "power2.inOut",
           }
         );
-      }
+      },
     });
   };
 
@@ -122,8 +122,10 @@ const NavBar = () => {
   }, [isNavVisible]);
 
   useEffect(() => {
-    const sections = navItems.map(item => document.getElementById(item.id)).filter(Boolean);
-    
+    const sections = navItems
+      .map((item) => document.getElementById(item.id))
+      .filter(Boolean);
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -134,7 +136,7 @@ const NavBar = () => {
       },
       {
         threshold: 0.5,
-        rootMargin: "-80px 0px -50% 0px"
+        rootMargin: "-80px 0px -50% 0px",
       }
     );
 
@@ -177,8 +179,9 @@ const NavBar = () => {
                   className={clsx(
                     "nav-hover-btn transition-all duration-300 hover:text-violet-300",
                     {
-                      "text-violet-400 after:scale-x-100": activeSection === item.id,
-                      "text-blue-50": activeSection !== item.id
+                      "text-violet-400 after:scale-x-100":
+                        activeSection === item.id,
+                      "text-blue-50": activeSection !== item.id,
                     }
                   )}
                 >

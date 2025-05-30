@@ -51,6 +51,10 @@ const Hero = () => {
     );
   });
 
+  const handleContactClick = () => {
+    window.location.href = "mailto:hello@dreamskrin.com?subject=Let's Get Started&body=Hi there! I'm interested in transforming my brand with DreamSkrin. Let's discuss how we can work together.";
+  };
+
   return (
     <div className="relative h-dvh w-screen overflow-x-hidden">
       {loading && (
@@ -77,32 +81,32 @@ const Hero = () => {
         </div>
 
         <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 text-white">
-          M<b>A</b>RKETING
+          INNOV<b>A</b>TION
         </h1>
 
         <div className="absolute left-0 top-0 z-40 size-full">
           <div className="mt-24 px-5 sm:px-10">
             <h1 className="special-font hero-heading text-white">
-              redefi<b>n</b>e
+              revo<b>l</b>ution
             </h1>
 
             <p className="mb-5 max-w-64 font-robert-regular text-white">
-              Enter the Digital Revolution <br /> Unleash the Growth Economy
+              Transform Your Digital Presence <br /> Accelerate Business Growth
             </p>
-            <a href="mailto:hello@example.com">
+            <div onClick={handleContactClick}>
               <Button
                 id="cta"
-                title="time to go viral"
+                title="transform now"
                 leftIcon={<TiLocationArrow />}
-                containerClass="bg-yellow-300 flex-center gap-1"
+                containerClass="bg-yellow-300 flex-center gap-1 cursor-pointer"
               />
-            </a>
+            </div>
           </div>
         </div>
       </div>
 
       <h1 className="special-font hero-heading absolute bottom-5 right-5 text-black">
-        M<b>A</b>RKETING
+        INNOV<b>A</b>TION
       </h1>
     </div>
   );
